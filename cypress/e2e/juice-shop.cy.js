@@ -9,14 +9,21 @@ describe("Juice-shop without auto login", () => {
     HomePage.meWantItButton.click();
   });
 
-  it("Login", () => {
+  it.only("Login", () => {
     // Click Account button
+    HomePage.accountButton.should("be.visible").click();
     // Click Login button
+    HomePage.loginButton.should("be.visible").click();
     // Set email value to "demo"
+    LoginPage.inputEmail.type("demo");
     // Set password value to "demo"
+    LoginPage.inputPassword.type("demo");
     // Click Log in
+    LoginPage.loginButton.click();
     // Click Account button
+    HomePage.accountButton.click();
     // Validate that "demo" account name appears in the menu section
+    HomePage.validateAccount.should("contains.text", "demo");
   });
 
   it("Registration", () => {
