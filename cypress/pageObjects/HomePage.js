@@ -27,6 +27,15 @@ class HomePage extends BasePage {
   static get makeSearchQuery(){
     return cy.get('#mat-input-0');
   }
+  static get itemsPerPage(){
+    return cy.get('.mat-select-min-line');
+  }
+  static get cardsInPage(){
+    return cy.get('.mat-grid-tile');
+  }
+  static get pickItemsPerPage(){
+    return cy.get('.mat-option-text');
+  }
 
 }
 

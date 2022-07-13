@@ -5,6 +5,13 @@ import LemonPage from "../pageObjects/LemonPage";
 import fiveHundredmlPage from "../pageObjects/fiveHundredmlPage";
 import SearchKingPage from "../pageObjects/SearchKingPage";
 import SearchRaspberryPage from "../pageObjects/SearchRaspberryPage";
+import SearchGirlie from "../pageObjects/SearchGirlie";
+import BasketPage from "../pageObjects/BasketPage";
+import DeliveryMethodPage from "../pageObjects/DeliveryMethodPage";
+import OrderCompletionPage from "../pageObjects/OrderCompletionPage";
+import OrderSummaryPage from "../pageObjects/OrderSummaryPage";
+import PaymentOptionsPage from "../pageObjects/PaymentOptionsPage";
+import SelectAddressPage from "../pageObjects/SelectAddressPage";
 
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
@@ -152,35 +159,57 @@ it("Add a review", () => {
   SearchRaspberryPage.reviews.should("contains.text", "Tastes like metal");
   // Validate review -  "Tastes like metal"
 });
-
+  it("Validate product card amount", () => {
   // Create scenario - Validate product card amount
+  HomePage.cardsInPage.its('length').should('eq', 12);
   // Validate that the default amount of cards is 12
+  HomePage.itemsPerPage.click();
+  HomePage.pickItemsPerPage.contains("24").click();
   // Change items per page (at the bottom of page) to 24
+  HomePage.cardsInPage.its('length').should('eq', 24);
   // Validate that the amount of cards is 24
+  HomePage.itemsPerPage.click();
+  HomePage.pickItemsPerPage.contains("36").click();
   // Change items per page (at the bottom of page) to 36
+  HomePage.cardsInPage.its('length').should('eq', 35);
   // Validate that the amount of cards is 35
-
+});
+  it("Buy Girlie T-shirt", () => {
   // Create scenario - Buy Girlie T-shirt
+  HomePage.searchIcon.click();
   // Click on search icon
+  HomePage.makeSearchQuery.type("Girlie{enter}");
   // Search for Girlie
+  SearchGirlie.basketButton.click();
   // Add to basket "Girlie"
+  SearchGirlie.goToBasketButton.click();
   // Click on "Your Basket" button
   // Create page object - BasketPage
+  BasketPage.checkoutButton.click();
   // Click on "Checkout" button
   // Create page object - SelectAddressPage
+  SelectAddressPage.selectAddress.contains("United Fakedom").click();
   // Select address containing "United Fakedom"
+  SelectAddressPage.continueButton.click();
   // Click Continue button
   // Create page object - DeliveryMethodPage
+  DeliveryMethodPage.deliverySpeed.last().click();
   // Select delivery speed Standard Delivery
+  DeliveryMethodPage.continueButton.click();
   // Click Continue button
   // Create page object - PaymentOptionsPage
+  PaymentOptionsPage.pickCard.click();
   // Select card that ends with "5678"
+  PaymentOptionsPage.continueButton.click();
   // Click Continue button
   // Create page object - OrderSummaryPage
+  OrderSummaryPage.checkoutButton.click();
   // Click on "Place your order and pay"
   // Create page object - OrderCompletionPage
+  OrderCompletionPage.confirmationText.should("be.visible").should("contains.text", "Thank you for your purchase!");
   // Validate confirmation - "Thank you for your purchase!"
-
+});
+  it("Add address", () => {
   // Create scenario - Add address
   // Click on Account
   // Click on Orders & Payment
@@ -191,7 +220,8 @@ it("Add a review", () => {
   // Fill in the necessary information
   // Click Submit button
   // Validate that previously added address is visible
-
+});
+  it("Add payment option", () => {
   // Create scenario - Add payment option
   // Click on Account
   // Click on Orders & Payment
@@ -204,4 +234,5 @@ it("Add a review", () => {
   // Set expiry year to 2090
   // Click Submit button
   // Validate that the card shows up in the list
+});
 });
