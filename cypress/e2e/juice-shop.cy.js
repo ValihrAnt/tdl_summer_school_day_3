@@ -3,6 +3,8 @@ import LoginPage from "../pageObjects/LoginPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
 import LemonPage from "../pageObjects/LemonPage";
 import fiveHundredmlPage from "../pageObjects/fiveHundredmlPage";
+import SearchKingPage from "../pageObjects/SearchKingPage";
+import SearchRaspberryPage from "../pageObjects/SearchRaspberryPage";
 
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
@@ -120,22 +122,36 @@ describe("Juice-shop with Auto login", () => {
   fiveHundredmlPage.juiceScreen.should("contains.text", "Sweet & tasty!");
   // Validate that the card (should) contains "Sweet & tasty!"
 });
-
+  it("Read a review", () => {
   // Create scenario - Read a review
+  HomePage.searchIcon.click();
   // Click on search icon
+  HomePage.makeSearchQuery.type("King{enter}");
   // Search for King
+  SearchKingPage.kingFacemask.click();
   // Select a product card - OWASP Juice Shop "King of the Hill" Facemask
+  SearchKingPage.productScreenReviews.click().wait(500);
   // Click expand reviews button/icon (wait for reviews to appear)
+  SearchKingPage.reviews.should("contains.text", "K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!");
   // Validate review - K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!
-
+});
+it("Add a review", () => {
   // Create scenario - Add a review
+  HomePage.searchIcon.click();
   // Click on search icon
+  HomePage.makeSearchQuery.type("Raspberry{enter}");
   // Search for Raspberry
+  SearchRaspberryPage.raspberryJuice.click();
   // Select a product card - Raspberry Juice (1000ml)
+  SearchRaspberryPage.addReview.wait(1000).type("Tastes like metal{enter}");
   // Type in review - "Tastes like metal"
+  SearchRaspberryPage.submitReview.click();
   // Click Submit
+  SearchRaspberryPage.productScreenReviews.click().wait(500);
   // Click expand reviews button/icon (wait for reviews to appear)
+  SearchRaspberryPage.reviews.should("contains.text", "Tastes like metal");
   // Validate review -  "Tastes like metal"
+});
 
   // Create scenario - Validate product card amount
   // Validate that the default amount of cards is 12
