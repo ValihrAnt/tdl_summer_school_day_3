@@ -12,6 +12,9 @@ import OrderCompletionPage from "../pageObjects/OrderCompletionPage";
 import OrderSummaryPage from "../pageObjects/OrderSummaryPage";
 import PaymentOptionsPage from "../pageObjects/PaymentOptionsPage";
 import SelectAddressPage from "../pageObjects/SelectAddressPage";
+import SavedAddressesPage from "../pageObjects/SavedAddressesPage";
+import CreateAddressPage from "../pageObjects/CreateAddressPage";
+import SavedPaymentMethodsPage from "../pageObjects/SavedPaymentMethodsPage";
 
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
@@ -211,20 +214,36 @@ it("Add a review", () => {
 });
   it("Add address", () => {
   // Create scenario - Add address
+  HomePage.accountButton.click();
   // Click on Account
+  HomePage.ordersAndPayment.last().click();
   // Click on Orders & Payment
+  HomePage.mySavedAddresses.click();
   // Click on My saved addresses
   // Create page object - SavedAddressesPage
+  SavedAddressesPage.addAddressButton.click();
   // Click on Add New Address
   // Create page object - CreateAddressPage
+  CreateAddressPage.addCountry.type("Latvia");
+  CreateAddressPage.addName.type("Adrians");
+  CreateAddressPage.addPhone.type("12312312");
+  CreateAddressPage.addZip.type("456");
+  CreateAddressPage.addAddress.type("Fake Street 123");
+  CreateAddressPage.addCity.type("Ventspils");
+  CreateAddressPage.addState.type("Kurzeme");
   // Fill in the necessary information
+  CreateAddressPage.submitButton.click();
   // Click Submit button
+  SavedAddressesPage.validateAddress.should("contains.text", "Fake Street 123, Ventspils, Kurzeme, 456");
   // Validate that previously added address is visible
 });
   it("Add payment option", () => {
   // Create scenario - Add payment option
+  HomePage.accountButton.click();
   // Click on Account
+  HomePage.ordersAndPayment.last().click();
   // Click on Orders & Payment
+  HomePage.myPaymentOptions.click();
   // Click on My payment options
   // Create page object - SavedPaymentMethodsPage
   // Click Add new card

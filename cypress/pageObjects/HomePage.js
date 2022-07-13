@@ -36,6 +36,15 @@ class HomePage extends BasePage {
   static get pickItemsPerPage(){
     return cy.get('.mat-option-text');
   }
+  static get ordersAndPayment(){
+    return cy.get('[aria-label="Show Orders and Payment Menu"]');
+  }
+  static get mySavedAddresses(){
+    return cy.get('[aria-label="Go to saved address page"]');
+  }
+  static get myPaymentOptions(){
+    return cy.get('[aria-label="Go to saved payment methods page"]');
+  }
 
 }
 
