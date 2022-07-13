@@ -21,6 +21,12 @@ class HomePage extends BasePage {
   static get validateAccount(){
     return cy.get('#mat-menu-panel-0');
   }
+  static get searchIcon(){
+    return cy.get('#searchQuery');
+  }
+  static get makeSearchQuery(){
+    return cy.get('#mat-input-0');
+  }
 
 }
 

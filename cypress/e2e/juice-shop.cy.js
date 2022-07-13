@@ -1,6 +1,8 @@
 import HomePage from "../pageObjects/HomePage";
 import LoginPage from "../pageObjects/LoginPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
+import LemonPage from "../pageObjects/LemonPage";
+
 
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
@@ -26,7 +28,7 @@ describe("Juice-shop without auto login", () => {
     HomePage.validateAccount.should("contains.text", "demo");
   });
 
-  it.only("Registration", () => {
+  it("Registration", () => {
     // Click Account button
     HomePage.accountButton.should("be.visible").click();
     // Login button
@@ -74,9 +76,13 @@ describe("Juice-shop with Auto login", () => {
 
   it("Search and validate Lemon", () => {
     // Click on search icon
+    HomePage.searchIcon.click();
     // Search for Lemon
+    HomePage.makeSearchQuery.type("Lemon{enter}")
     // Select a product card - Lemon Juice (500ml)
+    LemonPage.lemonJuice.click();
     // Validate that the card (should) contains "Sour but full of vitamins."
+    LemonPage.lemonJuiceScreen.should("contains.text", "Sour but full of vitamins.")
   });
 
   // Create scenario - Search 500ml and validate Lemon, while having multiple cards
