@@ -2,7 +2,7 @@ import HomePage from "../pageObjects/HomePage";
 import LoginPage from "../pageObjects/LoginPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
 import LemonPage from "../pageObjects/LemonPage";
-
+import fiveHundredmlPage from "../pageObjects/fiveHundredmlPage";
 
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
@@ -78,30 +78,48 @@ describe("Juice-shop with Auto login", () => {
     // Click on search icon
     HomePage.searchIcon.click();
     // Search for Lemon
-    HomePage.makeSearchQuery.type("Lemon{enter}")
+    HomePage.makeSearchQuery.type("Lemon{enter}");
     // Select a product card - Lemon Juice (500ml)
     LemonPage.lemonJuice.click();
     // Validate that the card (should) contains "Sour but full of vitamins."
     LemonPage.lemonJuiceScreen.should("contains.text", "Sour but full of vitamins.")
   });
 
+  it("Search 500ml and validate Lemon, while having multiple cards", () => {
   // Create scenario - Search 500ml and validate Lemon, while having multiple cards
+  HomePage.searchIcon.click();
   // Click on search icon
+  HomePage.makeSearchQuery.type("500ml{enter}");
   // Search for 500ml
+  fiveHundredmlPage.lemonJuice.click()
   // Select a product card - Lemon Juice (500ml)
+  fiveHundredmlPage.juiceScreen.should("contains.text", "Sour but full of vitamins.")
   // Validate that the card (should) contains "Sour but full of vitamins."
 
+  });
+  it("Search 500ml and validate cards", () => {
   // Create scenario - Search 500ml and validate cards
+  HomePage.searchIcon.click();
   // Click on search icon
+  HomePage.makeSearchQuery.type("500ml{enter}");
   // Search for 500ml
+  fiveHundredmlPage.eggfruitJuice.click();
   // Select a product card - Eggfruit Juice (500ml)
+  fiveHundredmlPage.juiceScreen.should("contains.text", "Now with even more exotic flavour.");
   // Validate that the card (should) contains "Now with even more exotic flavour."
+  fiveHundredmlPage.closeJuiceScreen.click();
   // Close the card
+  fiveHundredmlPage.lemonJuice.click();
   // Select a product card - Lemon Juice (500ml)
+  fiveHundredmlPage.juiceScreen.should("contains.text", "Sour but full of vitamins.");
   // Validate that the card (should) contains "Sour but full of vitamins."
+  fiveHundredmlPage.closeJuiceScreen.click();
   // Close the card
+  fiveHundredmlPage.strawberryJuice.click();
   // Select a product card - Strawberry Juice (500ml)
+  fiveHundredmlPage.juiceScreen.should("contains.text", "Sweet & tasty!");
   // Validate that the card (should) contains "Sweet & tasty!"
+});
 
   // Create scenario - Read a review
   // Click on search icon
