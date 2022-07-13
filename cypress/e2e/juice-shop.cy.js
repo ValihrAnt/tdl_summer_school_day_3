@@ -201,7 +201,7 @@ it("Add a review", () => {
   DeliveryMethodPage.continueButton.click();
   // Click Continue button
   // Create page object - PaymentOptionsPage
-  PaymentOptionsPage.pickCard.click();
+  PaymentOptionsPage.pickCard.first().click();
   // Select card that ends with "5678"
   PaymentOptionsPage.continueButton.click();
   // Click Continue button
@@ -246,12 +246,19 @@ it("Add a review", () => {
   HomePage.myPaymentOptions.click();
   // Click on My payment options
   // Create page object - SavedPaymentMethodsPage
+  SavedPaymentMethodsPage.addPaymentOption.click();
   // Click Add new card
+  SavedPaymentMethodsPage.addName.type("Adrians");
   // Fill in Name
+  SavedPaymentMethodsPage.addCardNumber.type("1234567890123456");
   // Fill in Card Number
+  SavedPaymentMethodsPage.pickExpiryMonth.select("7");
   // Set expiry month to 7
+  SavedPaymentMethodsPage.pickExpiryYear.select("2090");
   // Set expiry year to 2090
+  SavedPaymentMethodsPage.submitButton.click().wait(700);
   // Click Submit button
+  SavedPaymentMethodsPage.validateCard.last().should("contains.text", "************3456 Adrians7/2090");
   // Validate that the card shows up in the list
 });
 });
